@@ -1,9 +1,15 @@
-const Navbar = () => {
+import { Link } from "react-router-dom";
+
+function Navbar() {
   return (
-    <>
-      <h1>Navbar</h1>
-    </>
+    <div className="Navbar">
+      <Link to="/">React Blog One</Link>
+      <div className="Navbar-2">
+        <Link to="/login">Login</Link>
+        <Link to="/register">Regsiter</Link>
+      </div>
+    </div>
   );
-};
+}
 
 export default Navbar;
