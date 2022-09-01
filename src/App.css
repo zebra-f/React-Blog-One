@@ -17,7 +17,14 @@
 .Navbar-2 {
   display: flex;
   justify-content: space-between;
-  width: 10%;
+  width: 20%;
+}
+
+.Posts {
+  display: flex;
+  justify-content: space-around;
+  margin-left: 14%;
+  margin-right: 14%;
 }
 
 button, input[type="submit"], input[type="reset"] {
@@ -34,3 +41,7 @@ a {
   color: white;
   text-decoration: none; /* no underline */
 }
+
+ul {
+  list-style-type: none;
+ }
