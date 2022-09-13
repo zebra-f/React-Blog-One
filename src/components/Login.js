@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import axiosInstance from "../api/axios.js";
+import { UserContext } from "../UserContext.js";
 
 function Login() {
   const navigate = useNavigate();
+
+  const { user, setUser } = useContext(UserContext);
 
   const initialFormData = Object.freeze({
     email: "",
@@ -35,9 +39,12 @@ function Login() {
         localStorage.setItem("refresh_token", response.data.refresh);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
-
         console.log(response);
-        console.log(response.data);
+        setUser({
+          ...user,
+          loggedIn: true,
+          email: formData.email,
+        });
         navigate("/");
       })
       .catch((error) => {

@@ -8,7 +8,7 @@ function ReactTest() {
     return <h2>Test Failed</h2>;
   }
 
-  const isAuthenticated = axiosInstance
+  axiosInstance
     .get("/reacttest")
     .then((response) => {
       console.log(response);

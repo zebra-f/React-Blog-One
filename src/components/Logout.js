@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 import axiosInstance from "../api/axios";
+import { UserContext } from "../UserContext";
 
 function Logout() {
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
-  const logout = axiosInstance
+  axiosInstance
     .post("/user/logout/blacklist/", {
       refresh: localStorage.getItem("refresh_token"),
     })
@@ -13,6 +16,11 @@ function Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       axiosInstance.defaults.headers["Authorization"] = null;
+      setUser({
+        ...user,
+        loggedIn: false,
+        email: null,
+      });
       navigate("/");
     });
 
