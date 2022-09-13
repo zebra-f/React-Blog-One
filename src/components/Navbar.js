@@ -7,6 +7,8 @@ function Navbar() {
       <div className="Navbar-2">
         <Link to="/login">Login</Link>
         <Link to="/register">Regsiter</Link>
+        <Link to="/logout">Logout</Link>
+        <Link to="/reacttest">React Test</Link>
       </div>
     </div>
   );
