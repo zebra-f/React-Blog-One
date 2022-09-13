@@ -3,21 +3,23 @@ import { useState } from "react";
 
 function ReactTest() {
   const [testState, setTestState] = useState(true);
-  axiosInstance
+
+  if (!testState) {
+    return <h2>Test Failed</h2>;
+  }
+
+  const isAuthenticated = axiosInstance
     .get("/reacttest")
     .then((response) => {
-      setTestState(response);
+      console.log(response);
     })
     .catch((error) => {
       setTestState(false);
     });
 
-  if (!testState) {
-    return <h2>Test Failed</h2>;
-  }
   return (
     <div className="ReactTest">
-      <h1>Test</h1>
+      <h1>Testing...</h1>
     </div>
   );
 }
