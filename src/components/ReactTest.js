@@ -5,13 +5,13 @@ function ReactTest() {
   const [testState, setTestState] = useState(true);
 
   if (!testState) {
-    return <h2>Test Failed</h2>;
+    return <h2>Failed</h2>;
   }
 
   axiosInstance
     .get("/reacttest")
     .then((response) => {
-      console.log(response);
+      // pass
     })
     .catch((error) => {
       setTestState(false);
@@ -19,7 +19,7 @@ function ReactTest() {
 
   return (
     <div className="ReactTest">
-      <h1>Testing...</h1>
+      <h1>You're logged in...</h1>
     </div>
   );
 }

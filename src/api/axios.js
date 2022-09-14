@@ -15,4 +15,43 @@ const axiosInstance = axios.create({
   },
 });
 
+axiosInstance.interceptors.request.use(
+  (request) => {
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error["response"]["data"]["code"] === "token_not_valid") {
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (refreshToken) {
+        axiosInstance
+          .post("token/refresh/", {
+            refresh: refreshToken,
+          })
+          .then((response) => {
+            console.log("New access token issued");
+            const accessToken = response["data"]["access"];
+            localStorage.setItem("access_token", accessToken);
+            axiosInstance.defaults.headers["Authorization"] =
+              "JWT " + accessToken;
+          })
+          .catch((error) => {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            window.location.href = "/login/";
+          });
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default axiosInstance;
