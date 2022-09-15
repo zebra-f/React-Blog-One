@@ -24,6 +24,15 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+let responseCount = 0;
+const logoutUser = () => {
+  responseCount = 0;
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+  axiosInstance.defaults.headers["Authorization"] = null;
+  window.location.href = "/login/";
+};
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
@@ -32,22 +41,25 @@ axiosInstance.interceptors.response.use(
     if (error["response"]["data"]["code"] === "token_not_valid") {
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
-        axiosInstance
-          .post("token/refresh/", {
-            refresh: refreshToken,
-          })
-          .then((response) => {
-            console.log("New access token issued");
-            const accessToken = response["data"]["access"];
-            localStorage.setItem("access_token", accessToken);
-            axiosInstance.defaults.headers["Authorization"] =
-              "JWT " + accessToken;
-          })
-          .catch((error) => {
-            localStorage.removeItem("access_token");
-            localStorage.removeItem("refresh_token");
-            window.location.href = "/login/";
-          });
+        responseCount++;
+        if (responseCount < 4) {
+          return axiosInstance
+            .post("token/refresh/", {
+              refresh: refreshToken,
+            })
+            .then((response) => {
+              console.log("New access token has been issued");
+              const accessToken = response["data"]["access"];
+              localStorage.setItem("access_token", accessToken);
+              axiosInstance.defaults.headers["Authorization"] =
+                "JWT " + accessToken;
+            })
+            .catch((error) => {
+              // pass
+            });
+        } else {
+          logoutUser();
+        }
       }
     }
     return Promise.reject(error);
