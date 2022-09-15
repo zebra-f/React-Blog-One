@@ -42,13 +42,14 @@ axiosInstance.interceptors.response.use(
         // tokenExp is expressed in seconds while now() in milliseconds:
         const now = Math.ceil(Date.now() / 1000);
 
-        if (tokenExpiration > now && responseCount < 3) {
+        if (tokenExpiration > now && responseCount < 4) {
           responseCount++;
           return axiosInstance
             .post("token/refresh/", {
               refresh: refreshToken,
             })
             .then((response) => {
+              responseCount = 0;
               // console.log("New access token has been issued");
               const accessToken = response["data"]["access"];
               localStorage.setItem("access_token", accessToken);
