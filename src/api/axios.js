@@ -24,15 +24,8 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// used just in case of infinite recursive request-response cycle
 let responseCount = 0;
-const logoutUser = () => {
-  responseCount = 0;
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("refresh_token");
-  axiosInstance.defaults.headers["Authorization"] = null;
-  window.location.href = "/login/";
-};
-
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
@@ -41,14 +34,22 @@ axiosInstance.interceptors.response.use(
     if (error["response"]["data"]["code"] === "token_not_valid") {
       const refreshToken = localStorage.getItem("refresh_token");
       if (refreshToken) {
-        responseCount++;
-        if (responseCount < 4) {
+        const Buffer = require("buffer/").Buffer;
+        const tokenParts = JSON.parse(
+          Buffer.from(refreshToken.split(".")[1], "base64").toString()
+        );
+        const tokenExpiration = tokenParts.exp;
+        // tokenExp is expressed in seconds while now() in milliseconds:
+        const now = Math.ceil(Date.now() / 1000);
+
+        if (tokenExpiration > now && responseCount < 3) {
+          responseCount++;
           return axiosInstance
             .post("token/refresh/", {
               refresh: refreshToken,
             })
             .then((response) => {
-              console.log("New access token has been issued");
+              // console.log("New access token has been issued");
               const accessToken = response["data"]["access"];
               localStorage.setItem("access_token", accessToken);
               axiosInstance.defaults.headers["Authorization"] =
@@ -56,9 +57,14 @@ axiosInstance.interceptors.response.use(
             })
             .catch((error) => {
               // pass
+              // this part of the code will never be reached
             });
         } else {
-          logoutUser();
+          responseCount = 0;
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          axiosInstance.defaults.headers["Authorization"] = null;
+          window.location.href = "/login/";
         }
       }
     }
