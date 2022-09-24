@@ -6,11 +6,12 @@ function Posts() {
   const [posts, setPosts] = useState(null);
   const [postsApiError, setPostsApiError] = useState(false);
   useEffect(() => {
-    const apiUrl = "http://127.0.0.1:8000/api/";
+    const apiUrl = "http://127.0.0.1:8000/api/posts";
     fetch(apiUrl)
       .then((response) => response.json())
       .then((posts) => {
         setPosts(posts);
+        console.log(posts);
       })
       .catch((error) => {
         setPostsApiError(true);

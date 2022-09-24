@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Posts from "./components/Posts";
+import PostDetail from "./components/PostDetail";
 import Logout from "./components/Logout";
 
 import ReactTest from "./components/ReactTest";
@@ -28,6 +29,8 @@ function App() {
           <Route path="logout" element={<Logout />} />
           <Route path="register" element={<Register />} />
           <Route path="/" element={<Posts />} />
+          <Route path="posts" element={<Posts />} />
+          <Route path="posts/:id" element={<PostDetail />} />
           <Route path="reacttest" element={<ReactTest />} />
         </Routes>
       </UserContext.Provider>

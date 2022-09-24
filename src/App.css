@@ -27,6 +27,14 @@
   margin-right: 14%;
 }
 
+.PostDetail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 14%;
+  margin-right: 14%;
+}
+
 button, input[type="submit"], input[type="reset"] {
 	background: none;
 	color: inherit;
@@ -38,7 +46,7 @@ button, input[type="submit"], input[type="reset"] {
 }
 
 a {
-  color: white;
+  color: rgb(255, 100, 100);
   text-decoration: none; /* no underline */
 }
 
