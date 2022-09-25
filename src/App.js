@@ -16,8 +16,8 @@ import { UserContext } from "./UserContext";
 
 function App() {
   const [user, setUser] = useState({
-    loggedIn: false,
-    email: null,
+    loggedIn: localStorage.getItem("logged_in"),
+    email: localStorage.getItem("email"),
   });
 
   return (

@@ -16,9 +16,12 @@ function Logout() {
       localStorage.removeItem("access_token");
       localStorage.removeItem("refresh_token");
       axiosInstance.defaults.headers["Authorization"] = null;
+
+      localStorage.removeItem("logged_in");
+      localStorage.removeItem("email");
       setUser({
         ...user,
-        loggedIn: false,
+        loggedIn: null,
         email: null,
       });
       navigate("/");

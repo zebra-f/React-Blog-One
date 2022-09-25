@@ -64,6 +64,8 @@ axiosInstance.interceptors.response.use(
           responseCount = 0;
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
+          localStorage.removeItem("logged_in");
+          localStorage.removeItem("email");
           axiosInstance.defaults.headers["Authorization"] = null;
           window.location.href = "/login/";
         }

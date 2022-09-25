@@ -39,7 +39,9 @@ function Login() {
         localStorage.setItem("refresh_token", response.data.refresh);
         axiosInstance.defaults.headers["Authorization"] =
           "JWT " + localStorage.getItem("access_token");
-        console.log(response);
+
+        localStorage.setItem("logged_in", true);
+        localStorage.setItem("email", formData.email);
         setUser({
           ...user,
           loggedIn: true,

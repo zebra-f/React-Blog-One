@@ -11,7 +11,6 @@ function Posts() {
       .then((response) => response.json())
       .then((posts) => {
         setPosts(posts);
-        console.log(posts);
       })
       .catch((error) => {
         setPostsApiError(true);
