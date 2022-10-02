@@ -24,7 +24,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
 
     axiosInstance
       .post(`user/register/`, {
@@ -33,13 +32,10 @@ function Register() {
         password: formData.password,
       })
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
         navigate("/login");
       })
       .catch((error) => {
         setSubmitError(true);
-        console.log(error);
       });
   };
 
@@ -52,37 +48,43 @@ function Register() {
       )}
       <form className="registration-form" action="">
         <div className="username">
-          <label className="form__label">Username: </label>
-          <input
-            className="form__input"
-            name="username"
-            type="text"
-            value={formData.username}
-            onChange={handleChange}
-            placeholder="Your Username"
-          />
+          <label className="form__label">
+            Username:
+            <input
+              className="form__input"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Your Username"
+            />
+          </label>
         </div>
         <div className="email">
-          <label className="form__label">Email: </label>
-          <input
-            className="form__input"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Your Email"
-          />
+          <label className="form__label">
+            Email:
+            <input
+              className="form__input"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+            />
+          </label>
         </div>
         <div className="password">
-          <label className="form__label">Password: </label>
-          <input
-            className="form__input"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Your Password"
-          />
+          <label className="form__label">
+            Password:
+            <input
+              className="form__input"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Your Password"
+            />
+          </label>
         </div>
         <div className="registraton-submit-button">
           <button onClick={handleSubmit} type="submit">

@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Posts from "./components/Posts";
 import PostDetail from "./components/PostDetail";
+import PostCreate from "./components/PostCreate";
 import Logout from "./components/Logout";
 
 import ReactTest from "./components/ReactTest";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/" element={<Posts />} />
           <Route path="posts" element={<Posts />} />
           <Route path="posts/:id" element={<PostDetail />} />
+          <Route path="postcreate" element={<PostCreate />} />
           <Route path="reacttest" element={<ReactTest />} />
         </Routes>
       </UserContext.Provider>

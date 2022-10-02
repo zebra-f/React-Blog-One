@@ -11,7 +11,10 @@ function Navbar() {
       <Link to="/">React Blog One</Link>
       <div className="Navbar-2">
         {user.loggedIn ? (
-          <Link to="/logout">Logout {user.email}</Link>
+          <>
+            <Link to="/postcreate">Create Post</Link>
+            <Link to="/logout">Logout {user.email}</Link>
+          </>
         ) : (
           <>
             <Link to="/login">Login</Link>
